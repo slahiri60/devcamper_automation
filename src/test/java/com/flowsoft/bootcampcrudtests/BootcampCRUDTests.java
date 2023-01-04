@@ -1,0 +1,85 @@
+package com.flowsoft.bootcampcrudtests;
+
+import com.flowsoft.commonartifacts.CommonFunctions;
+import com.flowsoft.commonartifacts.BootcampParameters;
+import com.flowsoft.bootcampcrud.BootcampCRUDFunctions;
+import lombok.extern.java.Log;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+import static io.restassured.RestAssured.given;
+
+@Log
+public class BootcampCRUDTests {
+
+    static BootcampParameters bootcampParameters = new BootcampParameters();
+    static BootcampCRUDFunctions bootcampCRUDFunctions = new BootcampCRUDFunctions();
+    static CommonFunctions commonFunctions = new CommonFunctions();
+
+    @BeforeClass
+    @Parameters({"baseURI"})
+    public void init(String baseURI) {
+        bootcampParameters.setBaseURI(baseURI);
+    }
+    @Test(priority=1)
+    public void retrieveAllBootcamps() {
+        log.info("\n\n====================================================================================");
+        log.info("*********************************************** TEST001 - Test to retrieve all Bootcamps ***********************************************");
+        bootcampCRUDFunctions.getAllBootcamps(bootcampParameters);
+    }
+
+    @Test(priority=2)
+    public void retrieveSingleBootcamp() {
+        log.info("\n\n====================================================================================");
+        log.info("*********************************************** TEST002 - Test to retrieve single Bootcamp ***********************************************");
+        bootcampParameters.setComparisonParameter("Bootcamp Name");
+        bootcampCRUDFunctions.validateBootcampElement(bootcampParameters, "EXISTING", "NameExisting");
+    }
+
+    @Test(priority=3)
+    public void createNewBootcamp() {
+        log.info("\n\n====================================================================================");
+        log.info("*********************************************** TEST003 - Test to create new Bootcamp ***********************************************");
+        bootcampParameters.setExpectedValue("Test Bootcamp");
+        bootcampCRUDFunctions.createNewbootcamp(bootcampParameters, "NEW");
+        bootcampCRUDFunctions.validateBootcampElement(bootcampParameters, "NEW", "NameNew");
+    }
+
+    @Test(priority=4, dependsOnMethods = {"createNewBootcamp"})
+    public void negativeInvalidBootcampIdFormat() {
+        log.info("\n\n====================================================================================");
+        log.info("*********************************************** TEST004 - Negative Test to validate error for invalid Bootcamp ID format ***********************************************");
+        String originalBootcampId = bootcampParameters.getBootcampId();
+        bootcampParameters.setBootcampId(commonFunctions.generateInvalidbootcampIdFormat(originalBootcampId));
+        bootcampCRUDFunctions.deletebootcamp(bootcampParameters, 404, "Failure");
+        bootcampParameters.setBootcampId(originalBootcampId);
+    }
+
+    @Test(priority=5, dependsOnMethods = {"createNewBootcamp"})
+    public void negativeNonexistentBootcampId() {
+        log.info("\n\n====================================================================================");
+        log.info("*********************************************** TEST005 - Negative Test to validate error for non-existent Bootcamp ID ***********************************************");
+        String originalBootcampId = bootcampParameters.getBootcampId();
+        bootcampParameters.setBootcampId(commonFunctions.generateNonexistentbootcampId( bootcampParameters.getBootcampId()));
+        bootcampCRUDFunctions.deletebootcamp(bootcampParameters, 404, "Failure");
+        bootcampParameters.setBootcampId(originalBootcampId);
+    }
+
+    @Test(priority=6, dependsOnMethods = {"createNewBootcamp"})
+    public void updateNewBootcamp() {
+        log.info("\n\n====================================================================================");
+        log.info("*********************************************** TEST004 - Test to update new Bootcamp ***********************************************");
+        bootcampCRUDFunctions.validateBootcampElement(bootcampParameters, "EXISTING", "HousingOriginal");
+        bootcampCRUDFunctions.updatebootcamp(bootcampParameters);
+        bootcampCRUDFunctions.validateBootcampElement(bootcampParameters, "EXISTING", "HousingUpdated");
+    }
+
+    @Test(priority=7, dependsOnMethods = {"createNewBootcamp"})
+    public void deleteNewBootcamp() {
+        log.info("\n\n====================================================================================");
+        log.info("*********************************************** TEST005 - Test to delete new Bootcamp ***********************************************");
+        bootcampCRUDFunctions.deletebootcamp(bootcampParameters, 200, "Success");
+        bootcampCRUDFunctions.deletebootcamp(bootcampParameters, 404, "Failure");
+    }
+}
