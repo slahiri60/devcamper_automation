@@ -82,57 +82,26 @@ public class BootcampCRUDFunctions {
 
     public void createNewbootcamp(BootcampParameters bootcampParameters, String bootcampQualifier) {
 
-        JSONParser jsonParser = new JSONParser();
-        JSONObject fullObject;
+        log.info("\n\n=========================== Issuing API POST call to create new bootcamp  ============================");
 
-        try (FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/test/resources/staticjsonfiles/bootcamp.json")) {
+        Response response = commonFunctions.addBootcampPOSTCall(bootcampParameters, returnJSONBody("bootcamp"));
+        log.info("\n\n=========================== API POST call completed successfully and HTTP Status Code of 201 validated ===========================");
 
-            log.info("\n\n=========================== Issuing API POST call to create new bootcamp  ============================");
-            Object obj = jsonParser.parse(reader);
-            fullObject = (JSONObject) obj;
-
-            Response response = commonFunctions.addBootcampPOSTCall(bootcampParameters, fullObject);
-            log.info("\n\n=========================== API POST call completed successfully and HTTP Status Code of 201 validated ===========================");
-
-            String bootcampId = commonFunctions.returnStringValueInResponse(response, "data._id");
-            log.info("bootcamp created with ID: " + bootcampId);
-            bootcampParameters.setBootcampId(bootcampId);
-            bootcampParameters.setComparisonParameter("Bootcamp Name");
-            bootcampParameters.setJsonElement("data.name");
-            commonFunctions.validateBootcampname(bootcampParameters, response, bootcampQualifier + " BOOTCAMP IN POST CALL API RESPONSE");
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        String bootcampId = commonFunctions.returnStringValueInResponse(response, "data._id");
+        log.info("bootcamp created with ID: " + bootcampId);
+        bootcampParameters.setBootcampId(bootcampId);
+        bootcampParameters.setComparisonParameter("Bootcamp Name");
+        bootcampParameters.setJsonElement("data.name");
+        commonFunctions.validateBootcampname(bootcampParameters, response, bootcampQualifier + " BOOTCAMP IN POST CALL API RESPONSE");
     }
 
     public void updatebootcamp(BootcampParameters bootcampParameters) {
 
-        JSONParser jsonParser = new JSONParser();
-        JSONObject fullObject;
+        log.info("\n\n=========================== Issuing API PUT call to update bootcamp  ============================");
 
-        try (FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/test/resources/staticjsonfiles/bootcampupdate.json")) {
-
-            log.info("\n\n=========================== Issuing API PUT call to update bootcamp  ============================");
-            Object obj = jsonParser.parse(reader);
-            fullObject = (JSONObject) obj;
-
-            RestAssured.baseURI = bootcampParameters.getBaseURI();
-            Response response = commonFunctions.updateBootcampPUTCall(bootcampParameters, fullObject);
-            log.info("\n\n=========================== API PUT call completed successfully and HTTP Status Code validated ===========================");
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        RestAssured.baseURI = bootcampParameters.getBaseURI();
+        Response response = commonFunctions.updateBootcampPUTCall(bootcampParameters, returnJSONBody("bootcampupdate"));
+        log.info("\n\n=========================== API PUT call completed successfully and HTTP Status Code validated ===========================");
 
         log.info("\n+++++++++++++++++++++++++++++++ Comparing bootcamp parameter post update +++++++++++++++++++++++++++++++ ");
 
@@ -171,6 +140,26 @@ public class BootcampCRUDFunctions {
             commonFunctions.compareActualResponse(bootcampParameters);
             log.info("+++++++++++++++++++++++++++++++++++++ " + comparisonParameter.toUpperCase() + " FOR SINGLE bootcamp COMPLETED +++++++++++++++++++++++++++++++++++++");
         }
+    }
+
+    public JSONObject returnJSONBody(String filename) {
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject fullObject = new JSONObject();
+
+        try (FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/test/resources/staticjsonfiles/" + filename + ".json")) {
+            Object obj = jsonParser.parse(reader);
+            fullObject = (JSONObject) obj;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return fullObject;
+
     }
 
 }

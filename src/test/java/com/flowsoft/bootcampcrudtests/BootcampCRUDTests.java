@@ -22,6 +22,7 @@ public class BootcampCRUDTests {
     public void init(String baseURI) {
         bootcampParameters.setBaseURI(baseURI);
     }
+
     @Test(priority=1)
     public void retrieveAllBootcamps() {
         log.info("\n\n====================================================================================");

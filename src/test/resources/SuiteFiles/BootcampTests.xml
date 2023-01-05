@@ -3,7 +3,7 @@
 <suite name="DevCamper Test Suite" verbose="1">
 
     <!--<parameter name="baseURI" value="http://localhost:5000/api/v1/bootcamps" />-->
-    <!--<parameter name="baseURI" value="https://flowsoft-devcamper-backend.herokuapp.com/api/v1/bootcamps" />-->
+    <parameter name="baseURI" value="https://flowsoft-devcamper-backend.herokuapp.com/api/v1/bootcamps" />
 
     <test name="DevCamper CRUD Tests">
         <classes>
