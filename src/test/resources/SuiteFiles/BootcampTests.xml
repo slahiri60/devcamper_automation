@@ -11,4 +11,10 @@
         </classes>
     </test>
 
+    <test name="DevCamper Negative Tests">
+        <classes>
+            <class name="com.flowsoft.bootcampnegativetests.BootcampNegativeTests"/>
+        </classes>
+    </test>
+
 </suite>

@@ -47,26 +47,6 @@ public class BootcampCRUDTests {
     }
 
     @Test(priority=4, dependsOnMethods = {"createNewBootcamp"})
-    public void negativeInvalidBootcampIdFormat() {
-        log.info("\n\n====================================================================================");
-        log.info("*********************************************** TEST004 - Negative Test to validate error for invalid Bootcamp ID format ***********************************************");
-        String originalBootcampId = bootcampParameters.getBootcampId();
-        bootcampParameters.setBootcampId(commonFunctions.generateInvalidbootcampIdFormat(originalBootcampId));
-        bootcampCRUDFunctions.deletebootcamp(bootcampParameters, 404, "Failure");
-        bootcampParameters.setBootcampId(originalBootcampId);
-    }
-
-    @Test(priority=5, dependsOnMethods = {"createNewBootcamp"})
-    public void negativeNonexistentBootcampId() {
-        log.info("\n\n====================================================================================");
-        log.info("*********************************************** TEST005 - Negative Test to validate error for non-existent Bootcamp ID ***********************************************");
-        String originalBootcampId = bootcampParameters.getBootcampId();
-        bootcampParameters.setBootcampId(commonFunctions.generateNonexistentbootcampId( bootcampParameters.getBootcampId()));
-        bootcampCRUDFunctions.deletebootcamp(bootcampParameters, 404, "Failure");
-        bootcampParameters.setBootcampId(originalBootcampId);
-    }
-
-    @Test(priority=6, dependsOnMethods = {"createNewBootcamp"})
     public void updateNewBootcamp() {
         log.info("\n\n====================================================================================");
         log.info("*********************************************** TEST004 - Test to update new Bootcamp ***********************************************");
@@ -75,7 +55,7 @@ public class BootcampCRUDTests {
         bootcampCRUDFunctions.validateBootcampElement(bootcampParameters, "EXISTING", "HousingUpdated");
     }
 
-    @Test(priority=7, dependsOnMethods = {"createNewBootcamp"})
+    @Test(priority=5, dependsOnMethods = {"createNewBootcamp"})
     public void deleteNewBootcamp() {
         log.info("\n\n====================================================================================");
         log.info("*********************************************** TEST005 - Test to delete new Bootcamp ***********************************************");
