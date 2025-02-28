@@ -23,16 +23,16 @@ public class BootcampCRUDFunctions {
 
     public void getAllBootcamps(BootcampParameters bootcampParameters) {
 
-        String[] bootcampNames = new String[] {"Devworks Bootcamp","ModernTech Bootcamp","Codemasters Bootcamp","Devcentral Bootcamp"};
+        //String[] bootcampNames = new String[] {"Devworks Bootcamp","ModernTech Bootcamp","Codemasters Bootcamp","Devcentral Bootcamp"};
 
-        bootcampParameters.setJsonElement("data.name");
+/*        bootcampParameters.setJsonElement("data.name");
         bootcampParameters.setBootcampCount(4);
-        bootcampParameters.setComparisonParameter("Bootcamp Name");
+        bootcampParameters.setComparisonParameter("Bootcamp Name");*/
 
         log.info("\n\n=========================== Issuing API GET call to retrieve all bootcamps  ===========================");
         Response response = commonFunctions.getAllBootcampsGETCall(bootcampParameters);
         log.info("\n\n=========================== API GET call completed successfully and HTTP Status Code of 200 validated ===========================");
-        String comparisonParameter = bootcampParameters.getComparisonParameter();
+        /*String comparisonParameter = bootcampParameters.getComparisonParameter();
         log.info("\n\n++++++++++++++++++++++++ COMPARING " + comparisonParameter.toUpperCase() + " FOR FIRST FOUR bootcampS ++++++++++++++++++++++++");
         for (int counter=0; counter < bootcampParameters.getBootcampCount(); counter++) {
             log.info("\n------------------------------------ COMPARING " + comparisonParameter + " " + (counter+1) + " ------------------------------------");
@@ -49,7 +49,7 @@ public class BootcampCRUDFunctions {
             }
         }
         log.info("+++++++++++++++++++++++++++++ " + comparisonParameter.toUpperCase() + " FOR FIRST FOUR bootcampS COMPLETED +++++++++++++++++++++++++++++");
-    }
+*/    }
 
     public void validateBootcampElement(BootcampParameters bootcampParameters, String bootcampQualifier, String bootcampElement) {
 

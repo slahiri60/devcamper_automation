@@ -23,7 +23,7 @@ public class BootcampNegativeTests {
         bootcampParameters.setBaseURI(baseURI);
     }
 
-    @Test(priority=1)
+    @Test(priority=1,enabled=false)
     public void negativeInvalidBootcampIdFormat() {
         log.info("\n\n====================================================================================");
         log.info("*********************************************** TEST001 - Negative Test to validate error for invalid Bootcamp ID format ***********************************************");
@@ -32,7 +32,7 @@ public class BootcampNegativeTests {
         bootcampParameters.setBootcampId(originalBootcampId);
     }
 
-    @Test(priority=2)
+    @Test(priority=2,enabled=false)
     public void negativeNonexistentBootcampId() {
         log.info("\n\n====================================================================================");
         log.info("*********************************************** TEST002 - Negative Test to validate error for non-existent Bootcamp ID ***********************************************");

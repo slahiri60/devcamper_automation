@@ -1,0 +1,14 @@
+1) Test case 1 completed:
+* Issue GET call to retrieve all Devcamps
+** Validate count of Devcamps => Functionality removed since the count will vary over time
+** Validate name of each Devcamp => Functionality modified to validate first 4 Devcamps only since the count will vary over time
+2) Test case 2 completed:
+* Issue GET call to retrieve single Devcamp
+** Validate name of single Devcamp
+3) Test case 3 completed:
+* Issue POST call to create new Devcamp
+* Issue GET call to retrieve all Devcamps
+** Validate count of Devcamps => Functionality removed since the count will vary over time
+** Validate name of newly created Devcamp => Functionality removed since the count will vary over time
+* Issue GET call to retrieve newly created Devcamp
+** Validate name of newly created Devcamp

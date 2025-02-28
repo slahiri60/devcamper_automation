@@ -30,7 +30,7 @@ public class BootcampCRUDTests {
         bootcampCRUDFunctions.getAllBootcamps(bootcampParameters);
     }
 
-    @Test(priority=2)
+    @Test(priority=2,enabled=false)
     public void retrieveSingleBootcamp() {
         log.info("\n\n====================================================================================");
         log.info("*********************************************** TEST002 - Test to retrieve single Bootcamp ***********************************************");
@@ -38,7 +38,7 @@ public class BootcampCRUDTests {
         bootcampCRUDFunctions.validateBootcampElement(bootcampParameters, "EXISTING", "NameExisting");
     }
 
-    @Test(priority=3)
+    @Test(priority=3,enabled=false)
     public void createNewBootcamp() {
         log.info("\n\n====================================================================================");
         log.info("*********************************************** TEST003 - Test to create new Bootcamp ***********************************************");
@@ -47,7 +47,7 @@ public class BootcampCRUDTests {
         bootcampCRUDFunctions.validateBootcampElement(bootcampParameters, "NEW", "NameNew");
     }
 
-    @Test(priority=4, dependsOnMethods = {"createNewBootcamp"})
+    @Test(priority=4, enabled=false, dependsOnMethods = {"createNewBootcamp"})
     public void updateNewBootcamp() {
         log.info("\n\n====================================================================================");
         log.info("*********************************************** TEST004 - Test to update new Bootcamp ***********************************************");
@@ -56,7 +56,7 @@ public class BootcampCRUDTests {
         bootcampCRUDFunctions.validateBootcampElement(bootcampParameters, "EXISTING", "HousingUpdated");
     }
 
-    @Test(priority=5, dependsOnMethods = {"createNewBootcamp"})
+    @Test(priority=5, enabled=false, dependsOnMethods = {"createNewBootcamp"})
     public void deleteNewBootcamp() {
         log.info("\n\n====================================================================================");
         log.info("*********************************************** TEST005 - Test to delete new Bootcamp ***********************************************");

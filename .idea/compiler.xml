@@ -10,8 +10,5 @@
         <module name="devcamper" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="devcamper" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
