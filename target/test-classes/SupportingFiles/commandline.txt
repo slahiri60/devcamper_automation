@@ -1,8 +1,0 @@
-CD C:\Users\Personal\IdeaProjects\devcamper
-
-<!--
-     <parameter name="baseURI" value="http://localhost:5000/api/v1/bootcamps" />
--->
-
-
-mvn -DbaseURI=http://localhost:5000/api/v1/bootcamps -DsuiteXmlFile=BootcampTests.xml clean test
