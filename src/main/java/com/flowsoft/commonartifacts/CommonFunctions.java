@@ -23,17 +23,6 @@ public class CommonFunctions {
         return response;
     }
 
-    public Response getSingleBootcampGETCall(BootcampParameters bootcampParameters) {
-
-        RestAssured.baseURI = bootcampParameters.getBaseURI();
-        Response response = given()
-                .pathParam("bootcampId", bootcampParameters.getBootcampId())
-                .expect().statusCode(200)
-                .when()
-                .get("/{bootcampId}");
-        return response;
-    }
-
     public Response addBootcampPOSTCall(BootcampParameters bootcampParameters, JSONObject fullObject) {
 
         RestAssured.baseURI = bootcampParameters.getBaseURI();
@@ -44,6 +33,17 @@ public class CommonFunctions {
                         .expect().statusCode(201)
                         .when()
                         .post("/");
+        return response;
+    }
+
+    public Response getSingleBootcampGETCall(BootcampParameters bootcampParameters) {
+
+        RestAssured.baseURI = bootcampParameters.getBaseURI();
+        Response response = given()
+                .pathParam("bootcampId", bootcampParameters.getBootcampId())
+                .expect().statusCode(200)
+                .when()
+                .get("/{bootcampId}");
         return response;
     }
 
