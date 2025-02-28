@@ -23,61 +23,9 @@ public class BootcampCRUDFunctions {
 
     public void getAllBootcamps(BootcampParameters bootcampParameters) {
 
-        //String[] bootcampNames = new String[] {"Devworks Bootcamp","ModernTech Bootcamp","Codemasters Bootcamp","Devcentral Bootcamp"};
-
-/*        bootcampParameters.setJsonElement("data.name");
-        bootcampParameters.setBootcampCount(4);
-        bootcampParameters.setComparisonParameter("Bootcamp Name");*/
-
         log.info("\n\n=========================== Issuing API GET call to retrieve all bootcamps  ===========================");
         Response response = commonFunctions.getAllBootcampsGETCall(bootcampParameters);
         log.info("\n\n=========================== API GET call completed successfully and HTTP Status Code of 200 validated ===========================");
-        /*String comparisonParameter = bootcampParameters.getComparisonParameter();
-        log.info("\n\n++++++++++++++++++++++++ COMPARING " + comparisonParameter.toUpperCase() + " FOR FIRST FOUR bootcampS ++++++++++++++++++++++++");
-        for (int counter=0; counter < bootcampParameters.getBootcampCount(); counter++) {
-            log.info("\n------------------------------------ COMPARING " + comparisonParameter + " " + (counter+1) + " ------------------------------------");
-            String bootcampJSONValueExpected = bootcampNames[counter];
-            String bootcampJSONValueResponse = commonFunctions.returnStringValueInResponse(response, "data[" + counter + "]." +
-                    commonFunctions.returnSecondComparisonParameter(bootcampParameters.getComparisonParameter()));
-            log.info(comparisonParameter + " Expected: " + bootcampJSONValueExpected + "; In response: " + bootcampJSONValueResponse);
-            bootcampParameters.setExpectedValue(bootcampJSONValueExpected);
-            bootcampParameters.setResponseValue(bootcampJSONValueResponse);
-            commonFunctions.compareActualResponse(bootcampParameters);
-            log.info("------------------------------------ " + comparisonParameter + " " + (counter+1) + " COMPARISON COMPLETED ------------------------------------");
-            if(counter == 0) {
-                bootcampParameters.setBootcampId(commonFunctions.returnStringValueInResponse(response, "data[" + counter + "]._id"));
-            }
-        }
-        log.info("+++++++++++++++++++++++++++++ " + comparisonParameter.toUpperCase() + " FOR FIRST FOUR bootcampS COMPLETED +++++++++++++++++++++++++++++");
-*/    }
-
-    public void validateBootcampElement(BootcampParameters bootcampParameters, String bootcampQualifier, String bootcampElement) {
-
-        switch (bootcampElement) {
-            case "NameExisting":
-                bootcampParameters.setExpectedValue("Devworks Bootcamp");
-                bootcampParameters.setJsonElement("data.name");
-                break;
-            case "NameNew":
-                bootcampParameters.setExpectedValue("Test Bootcamp");
-                bootcampParameters.setJsonElement("data.name");
-                break;
-            case "HousingOriginal":
-                bootcampParameters.setExpectedValue("false");
-                bootcampParameters.setJsonElement("data.housing");
-                break;
-            case "HousingUpdated":
-                bootcampParameters.setExpectedValue("true");
-                bootcampParameters.setJsonElement("data.housing");
-                break;
-            default:
-                break;
-        }
-
-        log.info("\n\n=========================== Issuing API GET call to retrieve single bootcamp  ============================");
-        Response response = commonFunctions.getSingleBootcampGETCall(bootcampParameters);
-        log.info("\n\n=========================== API GET call completed successfully and HTTP Status Code of 200 validated ===========================");
-        commonFunctions.validateBootcampname(bootcampParameters, response, bootcampQualifier + " BOOTCAMP IN GET CALL API RESPONSE");
     }
 
     public void createNewbootcamp(BootcampParameters bootcampParameters, String bootcampQualifier) {
@@ -95,16 +43,26 @@ public class BootcampCRUDFunctions {
         commonFunctions.validateBootcampname(bootcampParameters, response, bootcampQualifier + " BOOTCAMP IN POST CALL API RESPONSE");
     }
 
+    public void getSinglebootcamp(BootcampParameters bootcampParameters) {
+
+        log.info("\n\n=========================== Issuing API GET call to retrieve new bootcamp  ============================");
+
+        Response response = commonFunctions.getSingleBootcampGETCall(bootcampParameters);
+        log.info("\n\n=========================== API GET call to retrieve new bootcamp completed successfully and HTTP Status Code of 200 validated ===========================");
+
+        log.info("\n+++++++++++++++++++++++++++++++ Comparing bootcamp parameter post update +++++++++++++++++++++++++++++++ ");
+
+    }
+
     public void updatebootcamp(BootcampParameters bootcampParameters) {
 
         log.info("\n\n=========================== Issuing API PUT call to update bootcamp  ============================");
 
-        RestAssured.baseURI = bootcampParameters.getBaseURI();
         Response response = commonFunctions.updateBootcampPUTCall(bootcampParameters, returnJSONBody("bootcampupdate"));
         log.info("\n\n=========================== API PUT call completed successfully and HTTP Status Code validated ===========================");
 
         log.info("\n+++++++++++++++++++++++++++++++ Comparing bootcamp parameter post update +++++++++++++++++++++++++++++++ ");
-
+        bootcampParameters.setComparisonParameter("Bootcamp Housing Status");
     }
 
     public void deletebootcamp(BootcampParameters bootcampParameters, int statusCode, String result) {
@@ -140,6 +98,31 @@ public class BootcampCRUDFunctions {
             commonFunctions.compareActualResponse(bootcampParameters);
             log.info("+++++++++++++++++++++++++++++++++++++ " + comparisonParameter.toUpperCase() + " FOR SINGLE bootcamp COMPLETED +++++++++++++++++++++++++++++++++++++");
         }
+    }
+
+    public void validateBootcampElement(BootcampParameters bootcampParameters, String bootcampQualifier, String bootcampElement) {
+
+        switch (bootcampElement) {
+            case "NameNew":
+                bootcampParameters.setExpectedValue("Test Bootcamp");
+                bootcampParameters.setJsonElement("data.name");
+                break;
+            case "HousingOriginal":
+                bootcampParameters.setExpectedValue("false");
+                bootcampParameters.setJsonElement("data.housing");
+                break;
+            case "HousingUpdated":
+                bootcampParameters.setExpectedValue("true");
+                bootcampParameters.setJsonElement("data.housing");
+                break;
+            default:
+                break;
+        }
+
+        log.info("\n\n=========================== Issuing API GET call to retrieve single bootcamp  ============================");
+        Response response = commonFunctions.getSingleBootcampGETCall(bootcampParameters);
+        log.info("\n\n=========================== API GET call completed successfully and HTTP Status Code of 200 validated ===========================");
+        commonFunctions.validateBootcampname(bootcampParameters, response, bootcampQualifier + " BOOTCAMP IN GET CALL API RESPONSE");
     }
 
     public JSONObject returnJSONBody(String filename) {
